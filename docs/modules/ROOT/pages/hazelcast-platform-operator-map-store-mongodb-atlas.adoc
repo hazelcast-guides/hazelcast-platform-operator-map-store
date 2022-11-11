@@ -1,7 +1,7 @@
 = Configure MongoDb Atlas as an External Data Store for the Cluster with Hazelcast Platform Operator
 :page-layout: tutorial
 :page-product: operator
-:page-categories: Cloud Native
+:page-categories: Kubernetes
 :page-lang: java
 :page-enterprise: false
 :page-est-time: 20 mins
@@ -32,7 +32,7 @@ Before starting this tutorial, make sure that you meet the following prerequisit
 
 == Step 1. Add Node IPs in MongoDB Atlas whitelist 
 
-The database should be reachable from Hazelcast pods. That's why public IP(s) of the node(s) that they are running on should be whitelisted.  
+Hazelcast pods need access to the database. To allow Hazelcast pods to connect to the database you need to add the public IP addresses of the Kubernetes nodes to the whitelist in the Atlas dashboard.
 
 . Get external IPs of node(s) at the Kubernetes cluster:
 
