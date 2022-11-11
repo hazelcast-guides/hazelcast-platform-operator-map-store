@@ -1,4 +1,4 @@
-= Configure MongoDb Atlas as an External Data Store for the Cluster with Hazelcast Platform Operator
+= Configure MongoDB Atlas as an External Data Store for the Cluster with Hazelcast Platform Operator
 :page-layout: tutorial
 :page-product: operator
 :page-categories: Kubernetes
