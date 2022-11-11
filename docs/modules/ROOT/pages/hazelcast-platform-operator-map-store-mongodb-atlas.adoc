@@ -32,7 +32,7 @@ Before starting this tutorial, make sure that you meet the following prerequisit
 
 == Step 0. Add Node IPs in MongoDB Atlas whitelist 
 
-The database should be reachable from Hazelcast pods. That's why public IP(s) of the node(s) that they are running on should be whitelisted.  
+Hazelcast pods need access to the database. To allow Hazelcast pods to connect to the database you need to add the public IP addresses of the Kubernetes nodes to the whitelist in the Atlas dashboard.
 
 . Get external IPs of node(s) at the Kubernetes cluster:
 
