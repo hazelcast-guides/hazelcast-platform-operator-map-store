@@ -10,7 +10,7 @@
 == Context
 In this tutorial, you'll do the following:
 
-- Build and Deploy custom MapStore/MapLoader implementation to cloud storage.
+- Build and deploy a custom MapStore/MapLoader implementation to cloud storage.
 
 - Start Hazelcast cluster with classpath that includes MapStore/MapLoader JAR
 
