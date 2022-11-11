@@ -16,7 +16,7 @@ In this tutorial, you'll do the following:
 
 - Create a Hazelcast Map with MapStore/MapLoader configuration
 
-- Run Hazelcast Java client to manipulate data via populating all entries from Atlas DB.
+- Run Hazelcast Java client to manipulate data via populating all entries from MongoDB Atlas.
 
 
 == Before you Begin
