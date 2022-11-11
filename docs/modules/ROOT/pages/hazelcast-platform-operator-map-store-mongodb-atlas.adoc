@@ -30,7 +30,7 @@ Before starting this tutorial, make sure that you meet the following prerequisit
 * Created blob storage and access credentials in one of the cloud providers: https://aws.amazon.com/s3/[AWS] - https://cloud.google.com/storage/[GCP] - https://azure.microsoft.com/en-us/services/storage/blobs/[Azure]
 
 
-== Step 0. Add Node IPs in MongoDB Atlas whitelist 
+== Step 1. Add Node IPs in MongoDB Atlas whitelist 
 
 The database should be reachable from Hazelcast pods. That's why public IP(s) of the node(s) that they are running on should be whitelisted.  
 
@@ -39,7 +39,7 @@ The database should be reachable from Hazelcast pods. That's why public IP(s) of
 +
 [source, shell]
 ----
-$ kubectl get nodes -o wide
+kubectl get nodes -o wide
 
 NAME       STATUS        EXTERNAL-IP     
 gke-....   Ready   ...   34...           ...
@@ -52,15 +52,15 @@ gke-....   Ready   ...   34...           ...
 image::mongo-atlas-network-access.png[]
 
 
-== Step 1. Deploy MapStore/MapLoader JAR to external storage
+== Step 2. Deploy MapStore/MapLoader JAR to external storage
 
 . Build MapStore/MapLoader JAR 
 
 +
 [source, shell]
 ----
-$ cd mapstore
-$ mvn package
+cd mapstore
+mvn package
 ----
 
 . Upload the JAR to the cloud provider storage blob/bucket that you have already created:
@@ -74,7 +74,7 @@ S3::
 --
 [source,bash]
 ----
-$ aws s3 cp mapstore/target/mapstore-mongodb-1.0-SNAPSHOT.jar s3://<BUCKET_NAME>
+aws s3 cp mapstore/target/mapstore-mongodb-1.0-SNAPSHOT.jar s3://<BUCKET_NAME>
 ----
 --
 
@@ -83,7 +83,7 @@ GCS::
 --
 [source,bash]
 ----
-$ gsutil cp mapstore/target/mapstore-mongodb-1.0-SNAPSHOT.jar gs://<BUCKET_NAME>     
+gsutil cp mapstore/target/mapstore-mongodb-1.0-SNAPSHOT.jar gs://<BUCKET_NAME>     
 ----
 --
 
@@ -92,14 +92,14 @@ ASB::
 --
 [source,bash]
 ----
-$ az storage blob upload --account-name <ACCOUNT_NAME> --container-name <CONTAINER_NAME> --file mapstore/target/mapstore-mongodb-1.0-SNAPSHOT.jar
+az storage blob upload --account-name <ACCOUNT_NAME> --container-name <CONTAINER_NAME> --file mapstore/target/mapstore-mongodb-1.0-SNAPSHOT.jar
 ----
 --
 
 ====
 
 
-== Step 2. Start Hazelcast Cluster
+== Step 3. Start Hazelcast Cluster
 
 . Create Secret for Bucket credentials
 +
@@ -114,7 +114,7 @@ S3::
 --
 [source,bash]
 ----
-$ kubectl create secret generic <secret-name> --from-literal=region=<region> \
+kubectl create secret generic <secret-name> --from-literal=region=<region> \
 	--from-literal=access-key-id=<access-key-id> \
 	--from-literal=secret-access-key=<secret-access-key>
 ----
@@ -125,7 +125,7 @@ GCS::
 --
 [source,bash]
 ----
-$ kubectl create secret generic <secret-name> --from-file=google-credentials-path=<service_account_json_file>
+kubectl create secret generic <secret-name> --from-file=google-credentials-path=<service_account_json_file>
 ----
 --
 
@@ -134,7 +134,7 @@ Azure::
 --
 [source,bash]
 ----
-$ kubectl create secret generic <secret-name> \
+kubectl create secret generic <secret-name> \
 	--from-literal=storage-account=<storage-account> \
 	--from-literal=storage-key=<storage-key>
 ----
@@ -149,7 +149,7 @@ Run the following command to create the Hazelcast cluster with User Code Deploym
 +
 [source, shell]
 ----
-$ cat <<EOF | kubectl apply -f -
+cat <<EOF | kubectl apply -f -
 apiVersion: hazelcast.com/v1alpha1
 kind: Hazelcast
 metadata:
@@ -178,13 +178,13 @@ EOF
 NOTE: Exposing the cluster for unisocket clients is required for local client that you will run in next steps. 
 
 
-== Step 3. Create Hazelcast Map with MapStore/MapLoader configuration
+== Step 4. Create Hazelcast Map with MapStore/MapLoader configuration
 
 . Create secret for database properties 
 +
 [source, shell]
 ----
-$ cat <<EOF | kubectl apply -f -
+cat <<EOF | kubectl apply -f -
 apiVersion: v1
 kind: Secret
 metadata:
@@ -203,7 +203,7 @@ TIP: Sample MongoDB Atlas URL -> mongodb+srv://<USERNAME>:<PASSWORD>@<DB_NAME>.m
 +
 [source, shell]
 ----
-$ cat <<EOF | kubectl apply -f -
+cat <<EOF | kubectl apply -f -
 apiVersion: hazelcast.com/v1alpha1
 kind: Map
 metadata:
@@ -218,13 +218,13 @@ EOF
 +
 
 
-== Step 4. Run local Hazelcast client to manipulate data
+== Step 5. Run local Hazelcast client to manipulate data
 
 . Check external IP of the LoadBalancer:
 +
 [source, shell]
 ----
-$ kubectl get services                           
+kubectl get services                           
 NAME         TYPE           EXTERNAL-IP   PORT(S)
 hazelcast    LoadBalancer   34....   5701:30164/TCP
 ----
@@ -245,9 +245,9 @@ config.getNetworkConfig().addAddress("<EXTERNAL-IP>")
 --
 [source, bash]
 ----
-$ cd mapstore
-$ mvn clean package -Pclient
-$ java -cp target/mapstore-mongodb-1.0-SNAPSHOT.jar com.hazelcast.tutorial.Client
+cd mapstore
+mvn clean package -Pclient
+java -cp target/mapstore-mongodb-1.0-SNAPSHOT.jar com.hazelcast.tutorial.Client
 ...
 Members [3] {
         Member [10.164.0.8]:5701 - 8616cb8d-b0e0-48bd-996c-9e81c6ee98e0
