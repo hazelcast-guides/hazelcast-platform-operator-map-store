@@ -26,7 +26,7 @@ Before starting this tutorial, make sure that you meet the following prerequisit
 * Up and running *public* https://kubernetes.io/[Kubernetes] cluster. Make sure the Kubernetes cluster is public.
 * Kubernetes command-line tool, https://kubernetes.io/docs/tasks/tools/#kubectl[kubectl]
 * Maven command-line tool, https://maven.apache.org/download.cgi[mvn]
-* MongoDB Atlas free-tier database, https://www.mongodb.com/docs/atlas/getting-started[Get Started with Atlas]
+* MongoDB Atlas database, https://www.mongodb.com/docs/atlas/getting-started[Get Started with Atlas] (free-tier is suitable for completing this guide).
 * Created blob storage and access credentials in one of the cloud providers: https://aws.amazon.com/s3/[AWS] - https://cloud.google.com/storage/[GCP] - https://azure.microsoft.com/en-us/services/storage/blobs/[Azure]
 
 
