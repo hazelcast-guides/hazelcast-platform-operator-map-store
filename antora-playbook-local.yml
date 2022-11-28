@@ -14,8 +14,8 @@ content:
   - url: https://github.com/hazelcast-guides/adoc-templates.git
     branches: antora-doc
   - url: .
-    branches: master
-    start_paths: docs
+    branches: HEAD
+    start_path: docs
 ui: 
   bundle:
     url: https://github.com/hazelcast/hazelcast-docs-ui/releases/latest/download/ui-bundle.zip
