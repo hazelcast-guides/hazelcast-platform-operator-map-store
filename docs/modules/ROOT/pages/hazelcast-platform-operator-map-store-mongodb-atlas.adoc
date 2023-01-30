@@ -87,7 +87,7 @@ gsutil cp mapstore/target/mapstore-mongodb-1.0-SNAPSHOT.jar gs://<BUCKET_NAME>
 ----
 --
 
-ASB::
+ABS::
 +
 --
 [source,bash]
@@ -268,6 +268,16 @@ Map size:
 
 image::mongo-atlas-supplements.png[]
 
+== Clean Up
+
+To clean up the created resources remove the all Custom Resources and PVCs.
+
+[source, shell]
+----
+kubectl delete secret <secret-name> mongodb-atlas-properties hazelcast-license-key
+kubectl delete $(kubectl get hazelcast,map -o name)
+kubectl delete pvc -l "app.kubernetes.io/managed-by=hazelcast-platform-operator"
+----
 
 == See Also
 

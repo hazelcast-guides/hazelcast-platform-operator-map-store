@@ -9,7 +9,7 @@ import com.operator.tutorial.mongodb.Supplement;
 public class Client {
     public static void main(String[] args) {
         ClientConfig config = new ClientConfig();
-        config.getNetworkConfig().addAddress("34.71.79.46")
+        config.getNetworkConfig().addAddress("<EXTERNAL-IP>")
                 .setSmartRouting(false);
 
         HazelcastInstance client = HazelcastClient.newHazelcastClient(config);
